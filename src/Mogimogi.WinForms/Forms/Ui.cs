@@ -1,4 +1,4 @@
-namespace QuestionBank.WinForms.Forms;
+namespace Mogimogi.WinForms.Forms;
 
 internal static class Ui
 {

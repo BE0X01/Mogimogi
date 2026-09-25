@@ -1,7 +1,7 @@
-using QuestionBank.Core.Abstractions;
-using QuestionBank.Core.Models;
+using Mogimogi.Core.Abstractions;
+using Mogimogi.Core.Models;
 
-namespace QuestionBank.Core.Services;
+namespace Mogimogi.Core.Services;
 
 public sealed class QuizService(IHistoryStore historyStore, Random? random = null)
 {

@@ -10,12 +10,12 @@ C# + .NET 10 WinForms + ClosedXML 0.105.0 + System.Text.Json으로 만든 학습
 4. 분류와 문제집을 고르고, 풀 문제 수를 입력한 뒤 `풀이 시작`을 누르세요.
 5. 선지를 선택하고 `답안 제출`을 누르면 채점 및 저장 후 다음 문제로 이동할 수 있습니다.
 
-개발 환경은 Windows용 .NET 10 SDK와 VS Code 또는 .NET 데스크톱 개발 환경을 갖춘 Visual Studio를 사용하면 됩니다. Visual Studio에서는 `QuestionBank.sln`을 열고 `QuestionBank.WinForms`를 시작 프로젝트로 설정하세요. macOS/Linux에서는 Core·Infrastructure 검증 프로그램을 실행할 수 있지만 WinForms 화면은 Windows에서 실행해야 합니다.
+개발 환경은 Windows용 .NET 10 SDK와 VS Code 또는 .NET 데스크톱 개발 환경을 갖춘 Visual Studio를 사용하면 됩니다. Visual Studio에서는 `Mogimogi.sln`을 열고 `Mogimogi.WinForms`를 시작 프로젝트로 설정하세요. macOS/Linux에서는 Core·Infrastructure 검증 프로그램을 실행할 수 있지만 WinForms 화면은 Windows에서 실행해야 합니다.
 
 명령어로 실행하려면 프로젝트 루트에서:
 
 ```powershell
-dotnet run --project src/QuestionBank.WinForms/QuestionBank.WinForms.csproj -c Release
+dotnet run --project src/Mogimogi.WinForms/Mogimogi.WinForms.csproj -c Release
 ```
 
 ## 이번 버전에 들어 있는 기능
@@ -36,12 +36,12 @@ dotnet run --project src/QuestionBank.WinForms/QuestionBank.WinForms.csproj -c R
 
 | 경로 | 역할 |
 |---|---|
-| `src/QuestionBank.Core/Models` | 문제, 선지, 문제집, 풀이 이력 모델 |
-| `src/QuestionBank.Core/Abstractions` | 엑셀 리더·기록 저장소 인터페이스 |
-| `src/QuestionBank.Core/Services` | 랜덤 출제, 세션 진행, ID 채점, 기록 집계 |
-| `src/QuestionBank.Infrastructure` | ClosedXML 읽기, 문제집 탐색, JSON 파일 저장 |
-| `src/QuestionBank.WinForms/Forms` | 시작·풀이·결과 화면과 공통 UI |
-| `tests/QuestionBank.Checks` | 핵심 동작을 실제 파일과 함께 검증하는 실행형 테스트 |
+| `src/Mogimogi.Core/Models` | 문제, 선지, 문제집, 풀이 이력 모델 |
+| `src/Mogimogi.Core/Abstractions` | 엑셀 리더·기록 저장소 인터페이스 |
+| `src/Mogimogi.Core/Services` | 랜덤 출제, 세션 진행, ID 채점, 기록 집계 |
+| `src/Mogimogi.Infrastructure` | ClosedXML 읽기, 문제집 탐색, JSON 파일 저장 |
+| `src/Mogimogi.WinForms/Forms` | 시작·풀이·결과 화면과 공통 UI |
+| `tests/Mogimogi.Checks` | 핵심 동작을 실제 파일과 함께 검증하는 실행형 테스트 |
 | `Data` | 동작 확인용 샘플 문제집 3개, 총 20문제 |
 | `docs/ARCHITECTURE.md` | 설계 규칙과 다음 기능 확장 방법 |
 | `docs/VALIDATION.md` | 검증 결과 및 Windows 수동 확인 항목 |
@@ -89,12 +89,14 @@ dotnet run --project src/QuestionBank.WinForms/QuestionBank.WinForms.csproj -c R
 | 데이터 | 위치 | 동작 |
 |---|---|---|
 | 문제은행 | 실행 파일 옆 `Data/*.xlsx` | 읽기 전용으로 사용 |
-| 사용자 이력 | `%LOCALAPPDATA%/QuestionBank/history.json` | 답안 제출마다 저장 |
+| 사용자 이력 | `%LOCALAPPDATA%/Mogimogi/history.json` | 답안 제출마다 저장 |
 | 직전 이력 백업 | 같은 경로의 `history.json.bak` | 두 번째 저장부터 직전 버전 보관 |
 
 개발 시 루트 `Data`가 빌드 출력의 `Data`로 복사됩니다. `Data 폴더 열기` 버튼은 현재 실행 중인 앱의 폴더를 엽니다. 개발 과정에서 계속 보관할 문제 파일은 루트 `Data`에도 넣으세요. 실행 도중 엑셀을 수정했다면 저장한 뒤 시작 화면에서 `새로고침`을 누르세요. 이미 진행 중인 세션에는 변경 내용을 적용하지 않습니다.
 
 JSON에는 개별 풀이의 ID, Question ID, 문제집, 풀이 시각, 당시 문제 내용·선지 표시 순서·선택 ID·정답 ID를 저장합니다. 정답·오답 횟수는 `HistoryQueries.Summarize()`로 집계하므로 이력과 누적 수치가 서로 어긋나지 않습니다. 여러 실행 폴더에서 실행해도 같은 Windows 사용자라면 이 기록 파일을 공유합니다.
+
+이름을 정리하기 전 버전의 `%LOCALAPPDATA%/QuestionBank` 기록은 새 `Mogimogi/history.json`이 없을 때 자동으로 복사합니다. 기존 JSON과 백업 원본은 삭제하지 않으며, Mogimogi 기록이 있으면 덮어쓰지 않습니다. 이전 버전이 실행 중이면 종료한 뒤 Mogimogi를 실행하세요. 이관 이후에는 Mogimogi 폴더에 기록을 저장합니다.
 
 저장은 같은 폴더의 임시 파일에 완료한 다음 기존 파일을 교체합니다. 파일 잠금으로 동시 쓰기를 막고, `AttemptId`로 같은 답안의 재시도를 중복 기록하지 않습니다. 저장이 실패하면 다음 문제로 넘어가지 않고 `저장 재시도`를 보여줍니다.
 
@@ -105,17 +107,17 @@ JSON에는 개별 풀이의 ID, Question ID, 문제집, 풀이 시각, 당시 �
 ## 검증 및 배포
 
 ```powershell
-dotnet build QuestionBank.sln -c Release
-dotnet run --project tests/QuestionBank.Checks/QuestionBank.Checks.csproj -c Release
+dotnet build Mogimogi.sln -c Release
+dotnet run --project tests/Mogimogi.Checks/Mogimogi.Checks.csproj -c Release
 ```
 
-테스트는 별도의 테스트 프레임워크 없이 실행되는 콘솔 프로그램입니다. 실패 시 비정상 종료하고, 성공하면 `PASS: 17 checks`를 출력합니다. `dotnet test` 대신 위 명령 또는 `check.cmd`를 사용하세요.
+테스트는 별도의 테스트 프레임워크 없이 실행되는 콘솔 프로그램입니다. 실패 시 비정상 종료하고, 성공하면 `PASS: 18 checks`를 출력합니다. `dotnet test` 대신 위 명령 또는 `check.cmd`를 사용하세요.
 
-`publish.cmd`는 .NET 런타임을 포함하는 Windows x64 배포본을 `publish/win-x64`에 만듭니다. 생성된 `QuestionBank.WinForms.exe`와 DLL, Data를 포함한 폴더 전체를 전달하세요. Windows ARM64 배포는 명령어의 `win-x64`를 `win-arm64`로 바꾸면 됩니다. 이 프로젝트는 설치 프로그램이나 자동 업데이트를 포함하지 않습니다.
+`publish.cmd`는 .NET 런타임을 포함하는 Windows x64 배포본을 `publish/win-x64`에 만듭니다. 생성된 `Mogimogi.exe`와 DLL, Data를 포함한 폴더 전체를 전달하세요. Windows ARM64 배포는 명령어의 `win-x64`를 `win-arm64`로 바꾸면 됩니다. 이 프로젝트는 설치 프로그램이나 자동 업데이트를 포함하지 않습니다.
 
 ## GitHub 자동 빌드
 
-`main`에 커밋을 올리면 `Windows build and checks`가 Windows에서 빌드 및 17개 검증을 실행합니다. 성공한 실행의 Artifacts에서 `Mogimogi-win-x64`를 내려받아 압축을 풀면 `QuestionBank.WinForms.exe`로 실행할 수 있습니다. 이 배포본은 런타임을 포함하며, Data와 DLL 파일을 함께 보관해야 합니다. Artifacts는 14일간 보관하도록 설정했습니다. 화면 조작 자체를 자동 검증하는 워크플로는 아닙니다.
+`main`에 커밋을 올리면 `Windows build and checks`가 Windows에서 빌드 및 18개 검증을 실행합니다. 성공한 실행의 Artifacts에서 `Mogimogi-win-x64`를 내려받아 압축을 풀면 `Mogimogi.exe`로 실행할 수 있습니다. 이 배포본은 런타임을 포함하며, Data와 DLL 파일을 함께 보관해야 합니다. Artifacts는 14일간 보관하도록 설정했습니다. 화면 조작 자체를 자동 검증하는 워크플로는 아닙니다.
 
 ## 다음 구현 순서
 

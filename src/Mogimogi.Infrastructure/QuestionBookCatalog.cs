@@ -1,7 +1,7 @@
-using QuestionBank.Core.Abstractions;
-using QuestionBank.Core.Models;
+using Mogimogi.Core.Abstractions;
+using Mogimogi.Core.Models;
 
-namespace QuestionBank.Infrastructure;
+namespace Mogimogi.Infrastructure;
 
 public sealed record CatalogResult(IReadOnlyList<QuestionBook> Books, IReadOnlyList<string> Errors);
 

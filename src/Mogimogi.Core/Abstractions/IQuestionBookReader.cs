@@ -1,6 +1,6 @@
-using QuestionBank.Core.Models;
+using Mogimogi.Core.Models;
 
-namespace QuestionBank.Core.Abstractions;
+namespace Mogimogi.Core.Abstractions;
 
 public interface IQuestionBookReader
 {

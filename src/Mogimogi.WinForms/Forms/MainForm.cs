@@ -1,10 +1,10 @@
 using System.Diagnostics;
-using QuestionBank.Core.Abstractions;
-using QuestionBank.Core.Models;
-using QuestionBank.Core.Services;
-using QuestionBank.Infrastructure;
+using Mogimogi.Core.Abstractions;
+using Mogimogi.Core.Models;
+using Mogimogi.Core.Services;
+using Mogimogi.Infrastructure;
 
-namespace QuestionBank.WinForms.Forms;
+namespace Mogimogi.WinForms.Forms;
 
 public sealed class MainForm : Form
 {
@@ -30,7 +30,7 @@ public sealed class MainForm : Form
         _userDirectory = userDirectory;
         _catalog = catalog;
         _history = history;
-        Ui.Configure(this, "문제은행 · 문제집 선택", new Size(820, 750));
+        Ui.Configure(this, "Mogimogi · 문제집 선택", new Size(820, 750));
         var root = Ui.Stack(9);
         root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         root.RowStyles.Add(new RowStyle(SizeType.AutoSize));

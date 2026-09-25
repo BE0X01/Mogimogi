@@ -1,12 +1,12 @@
-using QuestionBank.Core.Services;
+using Mogimogi.Core.Services;
 
-namespace QuestionBank.WinForms.Forms;
+namespace Mogimogi.WinForms.Forms;
 
 public sealed class ResultForm : Form
 {
     public ResultForm(QuizSession session)
     {
-        Ui.Configure(this, "문제은행 · 풀이 결과", new Size(880, 740));
+        Ui.Configure(this, "Mogimogi · 풀이 결과", new Size(880, 740));
         var answers = session.Answers;
         var correct = answers.Count(a => a.IsCorrect);
         var wrong = answers.Count - correct;

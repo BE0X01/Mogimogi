@@ -23,11 +23,11 @@ jobs:
         with:
           dotnet-version: '10.0.x'
       - name: Build solution
-        run: dotnet build QuestionBank.sln -c Release
+        run: dotnet build Mogimogi.sln -c Release
       - name: Run core and file checks
-        run: dotnet run --project tests/QuestionBank.Checks/QuestionBank.Checks.csproj -c Release --no-build
+        run: dotnet run --project tests/Mogimogi.Checks/Mogimogi.Checks.csproj -c Release --no-build
       - name: Publish Windows x64 app
-        run: dotnet publish src/QuestionBank.WinForms/QuestionBank.WinForms.csproj -c Release -r win-x64 --self-contained true -o publish/win-x64
+        run: dotnet publish src/Mogimogi.WinForms/Mogimogi.WinForms.csproj -c Release -r win-x64 --self-contained true -o publish/win-x64
       - name: Include license and usage guide
         run: Copy-Item LICENSE,README.md publish/win-x64/
       - name: Upload runnable app

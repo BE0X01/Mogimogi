@@ -1,9 +1,9 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using QuestionBank.Core.Abstractions;
-using QuestionBank.Core.Models;
+using Mogimogi.Core.Abstractions;
+using Mogimogi.Core.Models;
 
-namespace QuestionBank.Infrastructure;
+namespace Mogimogi.Infrastructure;
 
 public sealed class JsonHistoryStore : IHistoryStore
 {

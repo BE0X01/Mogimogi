@@ -1,6 +1,6 @@
-using QuestionBank.Core.Models;
+using Mogimogi.Core.Models;
 
-namespace QuestionBank.Core.Services;
+namespace Mogimogi.Core.Services;
 
 public static class HistoryQueries
 {

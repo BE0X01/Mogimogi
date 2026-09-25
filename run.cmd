@@ -8,5 +8,5 @@ if errorlevel 1 (
     pause
     exit /b 1
 )
-dotnet run --project src\QuestionBank.WinForms\QuestionBank.WinForms.csproj -c Release
+dotnet run --project src\Mogimogi.WinForms\Mogimogi.WinForms.csproj -c Release
 if errorlevel 1 pause

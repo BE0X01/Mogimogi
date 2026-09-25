@@ -1,15 +1,15 @@
 using ClosedXML.Excel;
-using QuestionBank.Core.Abstractions;
-using QuestionBank.Core.Models;
-using QuestionBank.Core.Services;
-using QuestionBank.Infrastructure;
+using Mogimogi.Core.Abstractions;
+using Mogimogi.Core.Models;
+using Mogimogi.Core.Services;
+using Mogimogi.Infrastructure;
 
 var test = new Checks();
 await test.RunAsync();
 
 internal sealed class Checks
 {
-    private readonly string _root = Path.Combine(Path.GetTempPath(), "QuestionBank.Checks-" + Guid.NewGuid().ToString("N"));
+    private readonly string _root = Path.Combine(Path.GetTempPath(), "Mogimogi.Checks-" + Guid.NewGuid().ToString("N"));
     private int _passed;
 
     internal async Task RunAsync()
@@ -220,6 +220,33 @@ internal sealed class Checks
                 var stats = HistoryQueries.Summarize(store.Items).Single().Value;
                 Assert(stats.CorrectCount == 1 && stats.WrongCount == 1 && stats.LastAnswerCorrect);
                 Assert(HistoryQueries.LatestWrongIds(store.Items).Count == 0);
+            });
+            await Check("이전 앱 기록 이관·원본 보존·재이관 방지·동시 쓰기 차단", () =>
+            {
+                var root = Path.Combine(_root, "migration");
+                var destination = UserDataDirectory.Prepare(root);
+                Assert(destination == Path.Combine(root, "Mogimogi"));
+                Assert(!File.Exists(Path.Combine(destination, "history.json")));
+                var legacy = Path.Combine(root, "QuestionBank");
+                Directory.CreateDirectory(legacy);
+                var oldPath = Path.Combine(legacy, "history.json");
+                File.WriteAllText(oldPath, "{\"schemaVersion\":1,\"attempts\":[]}");
+                File.WriteAllText(oldPath + ".bak", "original backup");
+                using (var fileLock = new FileStream(oldPath + ".lock", FileMode.OpenOrCreate,
+                    FileAccess.ReadWrite, FileShare.None))
+                {
+                    Throws<IOException>(() => UserDataDirectory.Prepare(root));
+                }
+                Assert(!File.Exists(Path.Combine(destination, "history.json")));
+                UserDataDirectory.Prepare(root);
+                var newPath = Path.Combine(destination, "history.json");
+                Assert(File.ReadAllText(newPath) == File.ReadAllText(oldPath));
+                Assert(File.ReadAllText(newPath + ".bak") == "original backup");
+                File.WriteAllText(newPath, "new history");
+                UserDataDirectory.Prepare(root);
+                Assert(File.ReadAllText(newPath) == "new history");
+                Assert(File.ReadAllText(oldPath) == "{\"schemaVersion\":1,\"attempts\":[]}");
+                Assert(!Directory.EnumerateFiles(destination, "*.tmp").Any());
             });
             Console.WriteLine($"\nPASS: {_passed} checks");
         }

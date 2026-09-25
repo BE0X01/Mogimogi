@@ -1,6 +1,6 @@
-using QuestionBank.Core.Services;
+using Mogimogi.Core.Services;
 
-namespace QuestionBank.WinForms.Forms;
+namespace Mogimogi.WinForms.Forms;
 
 public sealed class QuizForm : Form
 {
@@ -16,7 +16,7 @@ public sealed class QuizForm : Form
     public QuizForm(QuizSession session)
     {
         _session = session;
-        Ui.Configure(this, "문제은행 · 문제 풀이", new Size(880, 820));
+        Ui.Configure(this, "Mogimogi · 문제 풀이", new Size(880, 820));
         MinimumSize = new Size(760, 730);
         var root = Ui.Stack(5);
         root.RowStyles.Add(new RowStyle(SizeType.AutoSize));

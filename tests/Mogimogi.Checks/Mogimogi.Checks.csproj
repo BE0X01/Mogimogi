@@ -4,7 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/QuestionBank.Infrastructure/QuestionBank.Infrastructure.csproj" />
+    <ProjectReference Include="../../src/Mogimogi.Infrastructure/Mogimogi.Infrastructure.csproj" />
     <Content Include="../../Data/*.xlsx">
       <Link>Data/%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

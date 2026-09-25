@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace QuestionBank.Core.Models;
+namespace Mogimogi.Core.Models;
 
 public sealed record AnswerOption(string Id, string Text);
 

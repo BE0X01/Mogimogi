@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace QuestionBank.Core.Models;
+namespace Mogimogi.Core.Models;
 
 // 당시 문제와 선지 순서도 저장하므로 원본이 바뀌어도 과거 풀이를 해석할 수 있습니다.
 public sealed record AnswerAttempt(

@@ -18,6 +18,12 @@
 
 Windows GUI를 직접 조작한 결과는 아닙니다. 화면 배치, DPI, 실제 클릭·키보드 흐름은 아래 절차로 확인해야 합니다.
 
+## Mogimogi 이름 정리
+
+솔루션·프로젝트·네임스페이스·창 제목·실행파일 이름과 문서/스크립트/CI 경로를 Mogimogi로 통일했습니다. 현재 검증 프로그램은 기존 17개와 기록 이관 검증 1개를 합쳐 18개입니다. 위 링크는 최초 MVP의 검증 기록입니다. 최신 빌드는 [Actions](https://github.com/BE0X01/Mogimogi/actions)에서 확인할 수 있습니다.
+
+기록 이관은 새 기록이 없을 때만 수행하며, 원본 보존·기존 대상 파일 유지·이전 앱의 파일 잠금 처리를 검증합니다.
+
 ## Windows에서 첫 실행 확인
 
 1. `run.cmd` 실행 후 분류에 어휘·독해가 나타나는지 확인합니다.
@@ -33,8 +39,8 @@ Windows GUI를 직접 조작한 결과는 아닙니다. 화면 배치, DPI, 실�
 ## 재현 명령
 
 ```powershell
-dotnet build QuestionBank.sln -c Release
-dotnet run --project tests/QuestionBank.Checks/QuestionBank.Checks.csproj -c Release
+dotnet build Mogimogi.sln -c Release
+dotnet run --project tests/Mogimogi.Checks/Mogimogi.Checks.csproj -c Release
 ```
 
 검증용 임시 데이터는 OS 임시 폴더에 생성하고 삭제합니다. 사용자의 실제 `history.json`은 읽거나 수정하지 않습니다.
