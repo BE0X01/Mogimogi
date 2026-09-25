@@ -9,7 +9,14 @@
 - ClosedXML 0.105.0으로 샘플 Excel 3개, 총 20문제를 실제 읽어 검증.
 - 실행형 검증 17개 통과: 헤더/빈 행, 자동 및 고정 ID, 오류 행, 손상 파일 격리, ID 충돌, 중복 없는 출제, 개수 제한, 선지 셔플과 ID 채점, 중복 제출 차단, 저장 실패 재시도, JSON 재시작·백업·중복 방지, 손상 기록 보존, 파일 잠금, 통계·오답 조회.
 
-Windows GUI를 실제로 실행한 결과는 아닙니다. Windows Forms 런타임 화면, DPI, Windows 파일 교체 동작은 아래 절차로 확인해야 합니다.
+## GitHub Windows 검증
+
+- 커밋: `e09ad920828acbb6b1fd6e3e582fdac6c2b1b17b`
+- [Windows build and checks 실행 결과](https://github.com/BE0X01/Mogimogi/actions/runs/36167780756): 성공.
+- Windows에서 솔루션 빌드, 파일 저장·복원·잠금을 포함한 검증 17개, Windows x64 런타임 포함 배포, 실행 파일 아티팩트 업로드까지 완료했습니다.
+- 아티팩트: `Mogimogi-win-x64` (14일 보관).
+
+Windows GUI를 직접 조작한 결과는 아닙니다. 화면 배치, DPI, 실제 클릭·키보드 흐름은 아래 절차로 확인해야 합니다.
 
 ## Windows에서 첫 실행 확인
 
