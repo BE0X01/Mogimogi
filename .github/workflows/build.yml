@@ -1,0 +1,39 @@
+name: Windows build and checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build solution
+        run: dotnet build QuestionBank.sln -c Release
+      - name: Run core and file checks
+        run: dotnet run --project tests/QuestionBank.Checks/QuestionBank.Checks.csproj -c Release --no-build
+      - name: Publish Windows x64 app
+        run: dotnet publish src/QuestionBank.WinForms/QuestionBank.WinForms.csproj -c Release -r win-x64 --self-contained true -o publish/win-x64
+      - name: Include license and usage guide
+        run: Copy-Item LICENSE,README.md publish/win-x64/
+      - name: Upload runnable app
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mogimogi-win-x64
+          path: publish/win-x64/
+          if-no-files-found: error
+          retention-days: 14
